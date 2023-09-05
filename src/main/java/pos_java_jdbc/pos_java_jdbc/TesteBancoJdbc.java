@@ -12,11 +12,11 @@ import model.Userposjava;
 public class TesteBancoJdbc {
 	
 	@Test
-	public void initBanco() {
+	public void initSalvar() {
 		UserPosDAO userPosDAO = new UserPosDAO();
 		Userposjava userposjava = new Userposjava();
 		
-		userposjava.setId(6L);
+		
 		userposjava.setNome("tim");
 		userposjava.setEmail("tim@gmail.com");
 		
@@ -49,6 +49,32 @@ public class TesteBancoJdbc {
 			System.out.println(userposjava);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void initAtualizar() {
+		UserPosDAO dao = new UserPosDAO();
+		try {
+			Userposjava objetoBanco = dao.buscar(5L);
+			objetoBanco.setNome("nome mudado com o metodo atualizar");
+			dao.atualizar(objetoBanco);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void initDeletar() {
+		try {
+			UserPosDAO dao = new UserPosDAO();
+			dao.deletar(5L);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

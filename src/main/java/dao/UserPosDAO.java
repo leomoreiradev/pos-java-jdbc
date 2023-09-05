@@ -19,12 +19,11 @@ public class UserPosDAO {
 	}
 	
 	public void salvar (Userposjava userposjava) {
-		String sql = "insert into userposjava(id, nome, email) values(?,?,?)";
+		String sql = "insert into userposjava(nome, email) values(?,?)";
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setLong(1, userposjava.getId());
-			preparedStatement.setString(2, userposjava.getNome());
-			preparedStatement.setString(3, userposjava.getEmail());
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);	
+			preparedStatement.setString(1, userposjava.getNome());
+			preparedStatement.setString(2, userposjava.getEmail());
 			preparedStatement.execute();
 			connection.commit(); //confirma explicitamente a execuçao do script
 		} catch (SQLException e) {
@@ -68,5 +67,43 @@ public class UserPosDAO {
 		
 		return userposjava;
 			
+	}
+	
+	public void atualizar(Userposjava userposjava) {
+		
+		try {
+			String sql = "update userposjava set nome = ? where id = " + userposjava.getId();
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, userposjava.getNome());
+			preparedStatement.execute();
+			connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+
+	}
+	
+	public void deletar(Long id) {
+		try {
+			String sql = "delete from userposjava where id = " + id;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.execute();
+			connection.commit();
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 }
