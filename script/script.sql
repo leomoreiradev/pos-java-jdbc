@@ -1,7 +1,11 @@
-﻿insert into userposjava (id,nome,email)
-values(2,'joao', 'joao@gmail.com');
+﻿insert into userposjava (nome,email)
+values('maria', 'maria@gmail.com');
 
 select * from userposjava;
+select * from telefoneuser;
+
+
+delete from userposjava;
 
 -- criando sequence no db para que o id seja auto increment
 create SEQUENCE usersequence
@@ -10,8 +14,16 @@ minvalue  1
 maxvalue 9223372036854775807
 start 7;
 
+-- criando sequence no db para que o id seja auto increment
+create SEQUENCE user_telefone_seq
+increment 1
+minvalue  1
+maxvalue 9223372036854775807
+start 1;
+
 -- alterando a tabela para usar o sequence criado
 alter table userposjava ALTER column id set default nextval('usersequence'::regclass);
+alter table telefoneuser ALTER column id set default nextval('user_telefone_seq'::regclass);
 
 alter table userposjava add unique (id);
 
@@ -22,3 +34,5 @@ tipo character varying(255) not null,
 usuariopessoa bigint not null,
 constraint telefone_id primary key (id)
 );
+
+alter table telefoneuser add foreign key (usuariopessoa) references userposjava(id);
