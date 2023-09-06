@@ -12,3 +12,13 @@ start 7;
 
 -- alterando a tabela para usar o sequence criado
 alter table userposjava ALTER column id set default nextval('usersequence'::regclass);
+
+alter table userposjava add unique (id);
+
+create table telefoneuser (
+id bigint not null,
+numero character varying (255) not null,
+tipo character varying(255) not null,
+usuariopessoa bigint not null,
+constraint telefone_id primary key (id)
+);
