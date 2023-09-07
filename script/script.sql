@@ -46,3 +46,7 @@ select nome, numero, email from telefoneuser as fone
 inner join userposjava as userp
 on fone.usuariopessoa = userp.id
 where userp.id = 9;
+
+delete from telefoneuser where usuariopessoa = 9;
+
+delete from userposjava where id = 9;
