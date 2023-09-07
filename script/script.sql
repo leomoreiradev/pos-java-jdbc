@@ -1,6 +1,9 @@
 ﻿insert into userposjava (nome,email)
 values('maria', 'maria@gmail.com');
 
+insert into telefoneuser (numero,tipo, usuariopessoa)
+values('(45)9 8821-2355', 'celular', 9);
+
 select * from userposjava;
 select * from telefoneuser;
 
@@ -35,4 +38,11 @@ usuariopessoa bigint not null,
 constraint telefone_id primary key (id)
 );
 
+-- criando referencia de uma tabela com a outra
 alter table telefoneuser add foreign key (usuariopessoa) references userposjava(id);
+
+-- inner join
+select nome, numero, email from telefoneuser as fone
+inner join userposjava as userp
+on fone.usuariopessoa = userp.id
+where userp.id = 9;

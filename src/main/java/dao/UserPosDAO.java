@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import conexaojdbc.SingleConnection;
+import model.BeanUserFone;
 import model.Telefone;
 import model.Userposjava;
 
@@ -91,6 +92,35 @@ public class UserPosDAO {
 		
 		return userposjava;
 			
+	}
+	
+	
+	public List<BeanUserFone> listaUserFone(Long idUser){
+		List<BeanUserFone> beanUserFones = new ArrayList<BeanUserFone>();
+		String sql = " select nome, numero, email from telefoneuser as fone ";
+		sql += " inner join userposjava as userp ";
+		sql += " on fone.usuariopessoa = userp.id ";
+		sql += " where userp.id = " + idUser;
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				BeanUserFone beanUserFone = new BeanUserFone();
+				beanUserFone.setEmail(resultSet.getString("email"));
+				beanUserFone.setNome(resultSet.getString("nome"));
+				beanUserFone.setNumero(resultSet.getString("numero"));
+				
+				beanUserFones.add(beanUserFone);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return beanUserFones;
+		
+		
 	}
 	
 	public void atualizar(Userposjava userposjava) {
